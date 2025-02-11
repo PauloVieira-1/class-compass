@@ -8,7 +8,7 @@ function NoteItem({ deleteNote, id, title, content }) {
   return (
     <Col className="pt-3 px-3 pb-1 mt-3 mb-2 bg-custom-color-grey-lighter rounded-3 container-hidden">
       <Row style={{ height: "100%" }}>
-        <Col>
+        <Col xs={9}>
           <h5 className="fw-bold">{title}</h5>
           <p>{content}</p>
         </Col>

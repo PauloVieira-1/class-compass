@@ -4,17 +4,17 @@ import emptyTrash from "../../assets/trash3.svg";
 import fullTrash from "../../assets/trash3-fillw.svg";
 
 const priorityColors = {
-  "High Priority": "custom-color-red",
-  "Medium Priority": "custom-color-blue",
-  "Low Priority": "custom-color-green",
   "No Priority": "custom-color-grey-light",
+  "Low Priority": "custom-color-green",
+  "Medium Priority": "custom-color-blue",
+  "High Priority": "custom-color-red",
 };
 
 const priorityColorsInside = {
-  "High Priority": "custom-color-red-dark",
-  "Medium Priority": "custom-color-blue-dark",
-  "Low Priority": "custom-color-green-dark",
   "No Priority": "custom-color-grey",
+  "Low Priority": "custom-color-green-dark",
+  "Medium Priority": "custom-color-blue-dark",
+  "High Priority": "custom-color-red-dark",
 };
 function ReminderCard(props) {
   const [color, setColor] = useState(priorityColors[props.priority]);

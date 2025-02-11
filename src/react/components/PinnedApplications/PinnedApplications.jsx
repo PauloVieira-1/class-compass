@@ -94,8 +94,6 @@ function PinnedApplications() {
     urlLink.searchParams.set("pageUrl", searchUrl);
     urlLink.searchParams.set("size", "32");
 
-    // console.log(urlLink.toString());
-
     return urlLink.toString();
   };
 
@@ -130,14 +128,14 @@ function PinnedApplications() {
                 style={{ minWidth: "100%" }}
               >
                 <img
-                  className="float-end pt-2 default-image me-2"
+                  className="float-end pt-2 default-image"
                   src={UnfilledPlus}
                   style={{ minWidth: "30px", minHeight: "30px" }}
                   onClick={handleShow}
                   alt="Logo"
                 ></img>
                 <img
-                  className="float-end pt-2 hover-image me-2"
+                  className="float-end pt-2 hover-image"
                   src={FilledPlus}
                   style={{ minWidth: "30px", minHeight: "30px" }}
                   onClick={handleShow}

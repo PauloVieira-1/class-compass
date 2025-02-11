@@ -67,9 +67,7 @@ function ReminderHolder() {
       reminderData.content !== "" ||
       reminderData.date !== ""
     ) {
-      const newReminders = [...reminders, { key: current_id, ...reminderData }];
-
-      // console.log(reminderData)
+      const newReminders = [...reminders??[], { key: current_id, ...reminderData }]; /// weird  bracket thing why [] when I have reminders default 
 
       setReminder(newReminders);
       localStorage.setItem("reminders", JSON.stringify(newReminders));
@@ -100,7 +98,7 @@ function ReminderHolder() {
    */
 
   const removeReminder = (reminderId) => {
-    const foundReminder = reminders.find((item) => item.key === reminderId);
+    const foundReminder = reminders?.find((item) => item.key === reminderId);
     sendMessageBackgroundRemove(
       foundReminder.date,
       foundReminder.time,
@@ -197,7 +195,6 @@ function ReminderHolder() {
         handleChange={handleInputChange}
         title="Add a Reminder"
         element1="Reminder"
-        // element2="Reminder"
         element3="Date"
         element4="Time"
         emptyElement={showMesage}

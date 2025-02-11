@@ -48,7 +48,6 @@ function StartPage() {
           `http://api.weatherapi.com/v1/current.json?key=7a5d0f3e6abd49ce8ba163941251002&q=${cityName}&aqi=no`,
         );
         const data = await response.json();
-        console.log(data);
         setWeatherCode(data.current.condition.code);
         setIcon(
           weather.find((item) => item.code === data.current.condition.code)
@@ -96,20 +95,21 @@ function StartPage() {
       <Container className="mt-5 position-absolute bottom-0 pb-5 me-4 pe-3">
         <Row className="">
           <Col xs={4}></Col>
-          <Col xs={3} className="d-flex justify-content-end">
+          <Col xs={3} className="d-flex justify-content-end me-0 pe-0">
             <img
               src={icon}
               style={{ width: "100px", height: "100px", filter: "invert(1)" }}
-            />{" "}
+              alt="Weather Icon"
+            />
           </Col>
-          <Col xs={4} className="text-white">
+          <Col xs={3} className="text-white ms-4">
             <h2 className="fw-bold fs-4">{city ? `${city}` : "Loading..."}</h2>
             <p>{condition ? `${condition}` : "Loading..."}</p>
             <p>{temp ? `${temp}°C` : "Loading..."}</p>
           </Col>
-          <Col xs={1}>
+          {/* <Col xs={1}>
             <h1>""</h1>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </>

@@ -175,7 +175,7 @@ function SubjectBlock({ remove, id, name }) {
       <assignmentModelContext.Provider
         value={{ taskShow: false, assignmentShow: false }}
       >
-        <Container className="text-custom-color-grey-text-emphasis container-hidden">
+        <Container className="text-custom-color-grey-text-emphasis">
           <div className="p-3 my-3 mx-3 bg-custom-color-grey-lighter rounded-4">
             <Row className="mb-3">
               <Col xs={12}>
@@ -216,7 +216,7 @@ function SubjectBlock({ remove, id, name }) {
                     />
                   ))
                 ) : (
-                  <div className="d-flex align-items-center justify-content-center">
+                  <div className="d-flex align-items-center justify-content-start">
                     <p className="text-custom-color-grey-text-emphasis">
                       No assignments added
                     </p>
@@ -259,7 +259,7 @@ function SubjectBlock({ remove, id, name }) {
                     />
                   ))
                 ) : (
-                  <div className="d-flex align-items-center justify-content-center">
+                  <div className="d-flex align-items-center justify-content-start">
                     <p className="text-custom-color-grey-text-emphasis">
                       No tasks added
                     </p>

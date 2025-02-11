@@ -86,7 +86,7 @@ function QuickNotes() {
     <ModalContext.Provider value={{ show: false }}>
       <Container
         className="rounded-4 bg-custom-color-grey-light ms-0 mt-5 me-5 pb-1 position-relative container-overflow position-relative"
-        style={{ maxHeight: "20px !important" }}
+        style={{ maxHeight: "40px !important" }}
       >
         <Row className="">
           <Col className="d-flex align-items-center me-0 pe-0" xs={8}>

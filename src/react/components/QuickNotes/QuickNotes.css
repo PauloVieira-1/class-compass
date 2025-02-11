@@ -47,5 +47,5 @@
 .container-overflow {
   overflow-y: scroll !important;
   overflow-x: hidden !important;
-  max-height: 278px;
+  max-height: 330px;
 }
