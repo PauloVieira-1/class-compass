@@ -63,13 +63,7 @@ function App() {
         </Col>
         <Col xs={9} className="d-flex flex-column" style={{ height: "100%" }}>
           <Row className="mb-5">
-            <Col>
-              {showToolMenu ? (
-                <ToolMenu active={showToolMenu}/>
-              ) : (
-                ""
-              )}
-            </Col>
+            <Col>{showToolMenu ? <ToolMenu active={showToolMenu} /> : ""}</Col>
           </Row>
           <Row className="flex-grow-1 mt-5 me-3 pe-4">
             {showStart ? <StartPage /> : ""}

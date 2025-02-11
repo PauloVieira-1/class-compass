@@ -95,21 +95,20 @@ function StartPage() {
       </Container>
       <Container className="mt-5 position-absolute bottom-0 pb-5 me-4 pe-3">
         <Row className="">
-          <Col xs={4}>
-          </Col>
-          <Col xs={3}className="d-flex justify-content-end">
+          <Col xs={4}></Col>
+          <Col xs={3} className="d-flex justify-content-end">
             <img
               src={icon}
               style={{ width: "100px", height: "100px", filter: "invert(1)" }}
             />{" "}
           </Col>
           <Col xs={4} className="text-white">
-          <h2 className="fw-bold fs-4">{city ? `${city}` : "Loading..."}</h2>
-          <p>{condition ? `${condition}` : "Loading..."}</p> 
-          <p>{temp ? `${temp}°C` : "Loading..."}</p>
+            <h2 className="fw-bold fs-4">{city ? `${city}` : "Loading..."}</h2>
+            <p>{condition ? `${condition}` : "Loading..."}</p>
+            <p>{temp ? `${temp}°C` : "Loading..."}</p>
           </Col>
           <Col xs={1}>
-          <h1>""</h1>
+            <h1>""</h1>
           </Col>
         </Row>
       </Container>
