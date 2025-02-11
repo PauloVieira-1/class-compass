@@ -67,10 +67,6 @@ To set up the project locally, follow these steps:
 - light mode  
 
 
-## 🐞 Issues  
-
-Feel free to submit issues and enhancement requests in the [issues section](https://github.com/PauloVieira-1/organizer-app/issues).  
-
 ## 📄 License  
 
 This project is licensed under the MIT License.  
