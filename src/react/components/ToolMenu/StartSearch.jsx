@@ -1,19 +1,12 @@
-import "./ToolMenu.css";
 import { Button } from "react-bootstrap";
-import ModalElement from "../ModalElement/Modal.jsx";
 import { useState } from "react";
 import Search from "../../assets/search.svg";
 import SearchOrange from "../../assets/search-orange.svg";
-import { subjectModalContext } from "../../context/ModalContext.jsx";
+
 import { Container } from "react-bootstrap";
 
-function ToolMenu(props) {
-  const [show, setShow] = useState(false);
+function StartSearch() {
   const [search, setSearch] = useState("");
-
-  const handleClose = () => {
-    setShow(false);
-  };
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -24,12 +17,12 @@ function ToolMenu(props) {
   };
 
   return (
-    <div className={props.active ? " transition-left  visible" : " hidden"}>
+    <Container className="d-flex align-items-center justify-content-center mt-5">
       <div
-        id="tool-menu"
+        id="tool-menu2"
         className="shadow py-0 ps-4 pe-2 d-flex align-items-center"
       >
-        <form id="search" onSubmit={searchHandler} className="flex-grow-4 me-2">
+        <form id="search" onSubmit={searchHandler} className="flex-grow-1 me-2">
           <input
             placeholder="Search"
             className="fs-4"
@@ -62,8 +55,8 @@ function ToolMenu(props) {
           </div>
         </Button>
       </div>
-    </div>
+    </Container>
   );
 }
 
-export default ToolMenu;
+export default StartSearch;

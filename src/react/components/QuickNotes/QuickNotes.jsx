@@ -6,7 +6,7 @@ import NoteItem from "./NoteItem.jsx";
 import ModalElement from "../ModalElement/Modal.jsx";
 import { useEffect, useState, useRef } from "react";
 import { ModalContext } from "../../context/ModalContext.jsx";
-import Note from "../test.jsx"
+import Note from "../test.jsx";
 
 const INITIAL_VALUES = Object.freeze({
   title: "",
@@ -82,17 +82,6 @@ function QuickNotes() {
     );
   };
 
-// TESTING // 
-
-const n = new Note("test_title", "10");
-
-console.log(n.title)
-console.log(typeof(n.toNumber()))
-console.log(n.print())
-
-// TESTING //
-
-
   return (
     <ModalContext.Provider value={{ show: false }}>
       <Container
@@ -143,7 +132,7 @@ console.log(n.print())
         closeFunction={handleClose}
         saveChanges={addNotes}
         handleChange={handleInputChange}
-        title="What would you like to take note of?"
+        title="Add a Note"
         element1="Title"
         element2="Note"
         emptyElement={showMesage}

@@ -2,7 +2,12 @@ import "./Navbar.css";
 import { Container, Row } from "react-bootstrap";
 import QuickNotes from "../QuickNotes/QuickNotes.jsx";
 import Logo from "../../assets/Logo.png";
-function Navbar({ subjectFunction, applicationFunction, remindersFunction }) {
+function Navbar({
+  subjectFunction,
+  applicationFunction,
+  remindersFunction,
+  startFunction,
+}) {
   return (
     <div id="navbar" className="rounded-4 shadow p-3 mt-1 mb-5">
       <Container>
@@ -14,8 +19,9 @@ function Navbar({ subjectFunction, applicationFunction, remindersFunction }) {
             <img
               className="text-white p-2 rounded-3 "
               src={Logo}
-              style={{ height: "140px" }}
+              style={{ height: "140px", cursor: "pointer" }}
               alt="Logo"
+              onClick={startFunction}
             ></img>
           </div>
         </Row>
@@ -29,9 +35,6 @@ function Navbar({ subjectFunction, applicationFunction, remindersFunction }) {
         </li>
         <li>
           <button onClick={remindersFunction}>Reminders</button>
-        </li>
-        <li>
-          <a>Coming Soon</a>
         </li>
       </ul>
       <Container>

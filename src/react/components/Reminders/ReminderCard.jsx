@@ -58,7 +58,7 @@ function ReminderCard(props) {
   const newTag = colorKeys[(colorKeys.indexOf(tag) + 1) % colorKeys.length];
 
   return (
-    <div 
+    <div
       className={`bg-${color} rounded-4 p-3 text-white hover-shadow h-100 mx-3 my-3 container-hidden`}
       style={cardStyle}
     >

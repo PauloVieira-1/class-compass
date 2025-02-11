@@ -25,11 +25,13 @@ function ReminderHolder() {
   const [reminderDisplay, setReminderDisplay] = useState(false);
 
   useEffect(() => {
-    const reminders = JSON.parse(localStorage.getItem("reminders"))
+    const reminders = JSON.parse(localStorage.getItem("reminders"));
 
     if (reminders || reminders !== undefined) {
-        const sorted = reminders.sort((a,b) => new Date(a.date) - new Date(b.date))
-        setReminder(sorted)
+      const sorted = reminders?.sort(
+        (a, b) => new Date(a.date) - new Date(b.date),
+      );
+      setReminder(sorted);
     }
   }, []);
 
@@ -65,7 +67,6 @@ function ReminderHolder() {
       reminderData.content !== "" ||
       reminderData.date !== ""
     ) {
-      
       const newReminders = [...reminders, { key: current_id, ...reminderData }];
 
       // console.log(reminderData)
@@ -75,21 +76,23 @@ function ReminderHolder() {
       setReminderShow(false);
       setReminderData({ ...INITIAL_VALUES });
       setShowMessage(true);
-      sendMessageBackground(reminderData.date, reminderData.time, reminderData.title);
-      
+      sendMessageBackground(
+        reminderData.date,
+        reminderData.time,
+        reminderData.title,
+      );
     }
   };
 
   /**
-   * 
+   *
    * @param {String} date
    * @param {String} time
    */
 
   const sendMessageBackground = (date, time, reminder) => {
-    chrome.runtime.sendMessage({ event: "sendDate", date, time, reminder});
+    chrome.runtime.sendMessage({ event: "sendDate", date, time, reminder });
   };
-
 
   /**
    *
@@ -97,21 +100,21 @@ function ReminderHolder() {
    */
 
   const removeReminder = (reminderId) => {
-
     const foundReminder = reminders.find((item) => item.key === reminderId);
-    sendMessageBackgroundRemove(foundReminder.date, foundReminder.time, foundReminder.title);
+    sendMessageBackgroundRemove(
+      foundReminder.date,
+      foundReminder.time,
+      foundReminder.title,
+    );
 
     const newReminders = reminders.filter((item) => item.key !== reminderId);
     setReminder(newReminders);
     localStorage.setItem("reminders", JSON.stringify(newReminders));
-
   };
 
   const sendMessageBackgroundRemove = (date, time, reminder) => {
-    chrome.runtime.sendMessage({ event: "removeDate", date, time, reminder});
+    chrome.runtime.sendMessage({ event: "removeDate", date, time, reminder });
   };
-
-
 
   /**
    * @param {Object} reminderkey
@@ -151,8 +154,7 @@ function ReminderHolder() {
                     key={item.key}
                     id={item.key}
                     title={item.title}
-                    content={item.date
-                    }
+                    content={item.date}
                     date={item.time}
                     priority={item.priority}
                     changePriority={setPriority}

@@ -6,6 +6,8 @@ import WorkItem from "./WorkItem.jsx";
 import { useEffect, useState } from "react";
 import ModalElement from "../ModalElement/Modal.jsx";
 import { assignmentModelContext } from "../../context/ModalContext.jsx";
+import emptyTrash from "../../assets/trash3.svg";
+import fullTrash from "../../assets/trash3-fill.svg";
 
 const idGenerator = () => Math.random() + 1;
 
@@ -135,7 +137,6 @@ function SubjectBlock({ remove, id, name }) {
       console.warn("Unknown label:", label);
     }
 
-    console.log(subjects);
     setShowMessage(true);
   };
 
@@ -174,28 +175,53 @@ function SubjectBlock({ remove, id, name }) {
       <assignmentModelContext.Provider
         value={{ taskShow: false, assignmentShow: false }}
       >
-        <Container className="text-custom-color-grey-text-emphasis">
+        <Container className="text-custom-color-grey-text-emphasis container-hidden">
           <div className="p-3 my-3 mx-3 bg-custom-color-grey-lighter rounded-4">
-            <Row>
+            <Row className="mb-3">
               <Col xs={12}>
                 <h4 className="fw-bold fs-3 mb-3">{name}</h4>
               </Col>
+              {/* <Col xs={1}>
+                <div className="d-flex align-items-center justify-content-center ms-auto pt-0 text-center mb-3 image-container">
+                  <img
+                    className="default-image hover-trash"
+                    src={emptyTrash}
+                    style={{ minWidth: "20px", minHeight: "20px" }}
+                    alt="Logo"
+                  ></img>
+                  <img
+                    className="hover-image"
+                    src={fullTrash}
+                    style={{ minWidth: "20px", minHeight: "20px" }}
+                    alt="Logo"
+                    onClick={() => remove(id)}
+                  ></img>
+                </div>
+              </Col> */}
             </Row>
             <Row>
               <Col xs={11} className="mb-3">
                 <p className="fw-bolder fs-5">Assignments</p>
                 <hr style={{ borderWidth: "2px" }}></hr>
-                {assignments?.map((assignment) => (
-                  <WorkItem
-                    item={id}
-                    assignmentId={assignment.key}
-                    key={assignment.key}
-                    title={assignment.title}
-                    date={assignment.date}
-                    type="assignment"
-                    remove={removeLabel}
-                  />
-                ))}
+                {assignments?.length > 0 ? (
+                  assignments.map((assignment) => (
+                    <WorkItem
+                      item={id}
+                      assignmentId={assignment.key}
+                      key={assignment.key}
+                      title={assignment.title}
+                      date={assignment.date}
+                      type="assignment"
+                      remove={removeLabel}
+                    />
+                  ))
+                ) : (
+                  <div className="d-flex align-items-center justify-content-center">
+                    <p className="text-custom-color-grey-text-emphasis">
+                      No assignments added
+                    </p>
+                  </div>
+                )}
               </Col>
               <Col>
                 <div className="d-flex align-items-center justify-content-center image-container">
@@ -220,17 +246,25 @@ function SubjectBlock({ remove, id, name }) {
               <Col xs={11}>
                 <p className="fw-bolder fs-5">Tasks</p>
                 <hr style={{ borderWidth: "2px" }}></hr>
-                {task?.map((task) => (
-                  <WorkItem
-                    item={id}
-                    assignmentId={task.key}
-                    key={task.key}
-                    title={task.title}
-                    date={task.date}
-                    type="task"
-                    remove={removeLabel}
-                  />
-                ))}
+                {task.length > 0 ? (
+                  task.map((task) => (
+                    <WorkItem
+                      item={id}
+                      assignmentId={task.key}
+                      key={task.key}
+                      title={task.title}
+                      date={task.date}
+                      type="task"
+                      remove={removeLabel}
+                    />
+                  ))
+                ) : (
+                  <div className="d-flex align-items-center justify-content-center">
+                    <p className="text-custom-color-grey-text-emphasis">
+                      No tasks added
+                    </p>
+                  </div>
+                )}
               </Col>
               <Col>
                 <div className="d-flex align-items-center justify-content-center image-container mb-3">
@@ -251,9 +285,9 @@ function SubjectBlock({ remove, id, name }) {
                 </div>
               </Col>
             </Row>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center pe-5">
               <Button
-                className="py-1 px-4 mt-2 center-me rounded-5 btn-sm"
+                className="py-1 px-4 mt-2 center-me rounded-5 btn-sm "
                 variant="outline-secondary"
                 onClick={() => remove(id)}
               >

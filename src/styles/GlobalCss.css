@@ -81,3 +81,19 @@ body {
 .image-container:hover .hover-trash {
   display: none !important;
 }
+
+.transition-left {
+  animation-name: transition-left;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+  z-index: 1;
+}
+
+@keyframes transition-left {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

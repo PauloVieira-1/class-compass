@@ -25,7 +25,7 @@ function ModalElement({ closeFunction, saveChanges, handleChange, ...props }) {
           saveChanges();
         }}
       >
-        Save Note
+        Save
       </Button>
     </OverlayTrigger>
   );
@@ -38,10 +38,9 @@ function ModalElement({ closeFunction, saveChanges, handleChange, ...props }) {
         saveChanges();
       }}
     >
-      Save Note
+      Save
     </Button>
   );
-  
 
   return (
     <>
@@ -49,27 +48,27 @@ function ModalElement({ closeFunction, saveChanges, handleChange, ...props }) {
         <Container>
           <Row className="bg-custom-color-grey rounded-2">
             <Modal.Body className="bg-custom-color-grey text-custom-color-grey-text-emphasis rounded-top-2">
-              <Modal.Title className="text-custom-color-grey-text-emphasis">
+              <Modal.Title className="text-custom-color-grey-text-emphasis fw-bold fs-2">
                 {props.title}
               </Modal.Title>
               <div className="mt-3">
                 <form>
-                  <h6 className="my-0">
+                  <p className="my-0 fs-6">
                     <input
                       autoComplete="off"
-                      className="px-2 "
+                      className="pe-2 "
                       name="title"
                       placeholder={props.element1}
                       onChange={(e) => handleChange(e)}
                       autoFocus
                     ></input>
-                  </h6>
+                  </p>
                   {props.element3 && (
-                    <p className="mb-3 mt-1">
+                    <p className="mb-3 mt-1 fs-6">
                       <input
                         autoComplete="off"
                         type="date"
-                        className="px-2 pt-2"
+                        className="pe-2 pt-1"
                         name="date"
                         style={{ colorScheme: "dark" }}
                         placeholder={props.element3}
@@ -77,24 +76,24 @@ function ModalElement({ closeFunction, saveChanges, handleChange, ...props }) {
                       ></input>
                     </p>
                   )}
-                      {props.element4 && (
-                        <p className="mb-">
-                          <input
-                            autoComplete="off"
-                            type="time"
-                            style={{ colorScheme: "dark" }}
-                            className="px-2"
-                            name="time"
-                            placeholder={props.element2}
-                            onChange={(e) => handleChange(e)}
-                          ></input>
-                        </p>
-                      )}
-                  {props.element2 && (
-                    <p className="mb-1">
+                  {props.element4 && (
+                    <p className=" fs-6">
                       <input
                         autoComplete="off"
-                        className="px-2"
+                        type="time"
+                        style={{ colorScheme: "dark" }}
+                        className="pe-2"
+                        name="time"
+                        placeholder={props.element2}
+                        onChange={(e) => handleChange(e)}
+                      ></input>
+                    </p>
+                  )}
+                  {props.element2 && (
+                    <p className="mb-1 fs-6">
+                      <input
+                        autoComplete="off"
+                        className="pe-2"
                         name="content"
                         placeholder={props.element2}
                         onChange={(e) => handleChange(e)}
