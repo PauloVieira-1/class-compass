@@ -32,7 +32,7 @@ The Organizer App integrates multiple APIs to deliver a rich user experience:
 - prettier: Code formatting
 - copy-webpack-plugin, html-webpack-plugin: Build utilities
 - webpack-bundle-analyzer: Analyze bundle sizes
-- 
+  
 ## 🚀 Core Dependencies:
 - react & react-dom: Core for building user interfaces
 - react-big-calendar: Calendar component for task scheduling
