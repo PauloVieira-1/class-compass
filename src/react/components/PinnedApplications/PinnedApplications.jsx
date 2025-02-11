@@ -118,7 +118,7 @@ function PinnedApplications() {
                     );
                   })
                 ) : (
-                  <Empty title={"applications"} />
+                  <Empty title={"websites"} />
                 )}
               </Row>
             </Col>
@@ -150,8 +150,8 @@ function PinnedApplications() {
           closeFunction={handleClose}
           saveChanges={addApp}
           handleChange={handleInputChange}
-          title="Add an Application"
-          element1="Application"
+          title="Add a Website"
+          element1="Website Name"
           element2="Link"
           emptyElement={showMesage}
         />

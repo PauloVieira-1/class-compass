@@ -31,7 +31,7 @@ function Navbar({
           <button onClick={subjectFunction}>Subjects</button>
         </li>
         <li>
-          <button onClick={applicationFunction}>Applications</button>
+          <button onClick={applicationFunction}>Website Dock</button>
         </li>
         <li>
           <button onClick={remindersFunction}>Reminders</button>

@@ -74,7 +74,7 @@ function App() {
                 component={<Subjects />}
               />
               <FeatureBox
-                title="Applications"
+                title="Website Dock"
                 active={showApplications}
                 component={<PinnedApplications />}
               />
