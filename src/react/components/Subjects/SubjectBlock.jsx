@@ -6,168 +6,82 @@ import WorkItem from "./WorkItem.jsx";
 import { useEffect, useState } from "react";
 import ModalElement from "../ModalElement/Modal.jsx";
 import { assignmentModelContext } from "../../context/ModalContext.jsx";
-import emptyTrash from "../../assets/trash3.svg";
-import fullTrash from "../../assets/trash3-fill.svg";
 
-const idGenerator = () => Math.random() + 1;
+const idGenerator = () => Math.random().toString(36).substr(2, 9);
 
 function SubjectBlock({ remove, id, name }) {
   const [assignmentShow, setAssignmentShow] = useState(false);
   const [taskShow, setTaskShow] = useState(false);
-  const [task, setTask] = useState([]);
-  const [assignments, setAssignments] = useState([]);
-  const [currentObject, setObject] = useState([]);
-  const [subjects, setSubjectData] = useState([]);
-  const [showMesage, setShowMessage] = useState(true);
 
-  const handleTaskClose = () => setTaskShow(false);
+  const [tasks, setTasks] = useState([]);
+  const [assignments, setAssignments] = useState([]);
+
+  const [currentObject, setObject] = useState({});
+  const [showMessage, setShowMessage] = useState(true);
+
+  useEffect(() => {
+    const storedAssignments = localStorage.getItem("assignments");
+    const storedTasks = localStorage.getItem("tasks");
+
+    setAssignments(storedAssignments ? JSON.parse(storedAssignments) : []);
+    setTasks(storedTasks ? JSON.parse(storedTasks) : []);
+  }, []);
+
   const handleAssignmentClose = () => setAssignmentShow(false);
+  const handleTaskClose = () => setTaskShow(false);
 
   const handleAssignmentShow = () => setAssignmentShow(true);
   const handleTaskShow = () => setTaskShow(true);
 
-  useEffect(() => {
-    const items = localStorage.getItem("subjects");
-
-    if (items) {
-      const itemsP = JSON.parse(items);
-      const matchingItem = itemsP.find((subject) => subject.key === id);
-      if (matchingItem) {
-        setSubjectData([matchingItem]);
-      }
-    }
-  }, [id]);
-
-  useEffect(() => {
-    subjects.forEach((item) => {
-      if (item.key === id) {
-        setAssignments(item.assignments ?? []);
-        setTask(item.tasks ?? []);
-      }
-    });
-
-    const tempSubjects = JSON.parse(localStorage.getItem("subjects"));
-
-    localStorage.setItem(
-      "subjects",
-      JSON.stringify(
-        tempSubjects.filter((item) => item.key !== id).concat(subjects),
-      ),
-    );
-  }, [subjects]);
-
-  /**
-   *
-   * @param {Object} e
-   * @param {String} e.target.name
-   * @param {String} e.target.value
-   *
-   */
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setObject((preAssignmentData) => {
-      preAssignmentData = { ...preAssignmentData };
-      preAssignmentData[name] = value;
-
-      return preAssignmentData;
-    });
-
+    setObject((prev) => ({ ...prev, [name]: value }));
     setShowMessage(false);
   };
 
-  /**
-   *
-   * @param {Object} e
-   * @param {String} e.target.name
-   * @param {String} e.target.value
-   *
-   */
-  const handleInputChangeTask = (e) => {
-    const { name, value } = e.target;
-    setObject((preTaskData) => {
-      preTaskData = { ...preTaskData };
-      preTaskData[name] = value;
-
-      return preTaskData;
-    });
-    setShowMessage(false);
-  };
-
-  /**
-   * @param {string} itemID
-   * @param {{title:string}} object
-   * @param {string} label
-   */
   const addLabel = (itemID, object, label) => {
     if (!object?.title || !object?.date) {
       console.error("Invalid object:", object);
       return;
     }
 
-    const current_id = idGenerator();
-
-    setSubjectData((prevList) =>
-      prevList.map((item) => {
-        if (item.key === itemID) {
-          if (label === "assignment") {
-            return {
-              ...item,
-              assignments: [
-                ...(item.assignments ?? []),
-                { key: current_id, ...object },
-              ],
-            };
-          } else if (label === "task") {
-            return {
-              ...item,
-              tasks: [...(item.tasks ?? []), { key: current_id, ...object }],
-            };
-          }
-        }
-        return item;
-      }),
-    );
+    const newItem = { key: idGenerator(), ...object };
 
     if (label === "assignment") {
+      setAssignments((prev) => {
+        const updatedAssignments = [...prev, newItem];
+        localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
+        return updatedAssignments;
+      });
       handleAssignmentClose();
     } else if (label === "task") {
+      setTasks((prev) => {
+        const updatedTasks = [...prev, newItem];
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        return updatedTasks;
+      });
       handleTaskClose();
-    } else {
-      console.warn("Unknown label:", label);
     }
 
     setShowMessage(true);
   };
 
-  const removeLabel = (itemID, objectID, label) => {
-    setSubjectData((prevList) => {
-      return prevList.map((item) => {
-        if (label === "assignment") {
-          return item.key === itemID
-            ? {
-                ...item,
-                assignments: item.assignments.filter(
-                  (assignment) => assignment.key !== objectID,
-                ),
-              }
-            : item;
-        } else if (label === "task") {
-          return item.key === itemID
-            ? {
-                ...item,
-                tasks: item.tasks.filter((task) => task.key !== objectID),
-              }
-            : item;
-        }
+  const removeLabel = (objectID, label) => {
+    if (label === "assignment") {
+      setAssignments((prev) => {
+        const updatedAssignments = prev.filter(
+          (assignment) => assignment.key !== objectID,
+        );
+        localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
+        return updatedAssignments;
       });
-    });
-
-    setObject(
-      (prevTasks) =>
-        Array.isArray(prevTasks) &&
-        prevTasks?.filter((task) => task.key !== objectID),
-    );
+    } else if (label === "task") {
+      setTasks((prev) => {
+        const updatedTasks = prev.filter((task) => task.key !== objectID);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        return updatedTasks;
+      });
+    }
   };
 
   return (
@@ -181,34 +95,16 @@ function SubjectBlock({ remove, id, name }) {
               <Col xs={12}>
                 <h4 className="fw-bold fs-3 mb-3">{name}</h4>
               </Col>
-              {/* <Col xs={1}>
-                <div className="d-flex align-items-center justify-content-center ms-auto pt-0 text-center mb-3 image-container">
-                  <img
-                    className="default-image hover-trash"
-                    src={emptyTrash}
-                    style={{ minWidth: "20px", minHeight: "20px" }}
-                    alt="Logo"
-                  ></img>
-                  <img
-                    className="hover-image"
-                    src={fullTrash}
-                    style={{ minWidth: "20px", minHeight: "20px" }}
-                    alt="Logo"
-                    onClick={() => remove(id)}
-                  ></img>
-                </div>
-              </Col> */}
             </Row>
             <Row>
               <Col xs={11} className="mb-3">
                 <p className="fw-bolder fs-5">Assignments</p>
-                <hr style={{ borderWidth: "2px" }}></hr>
-                {assignments?.length > 0 ? (
+                <hr style={{ borderWidth: "2px" }} />
+                {assignments.length > 0 ? (
                   assignments.map((assignment) => (
                     <WorkItem
-                      item={id}
-                      assignmentId={assignment.key}
                       key={assignment.key}
+                      assignmentId={assignment.key}
                       title={assignment.title}
                       date={assignment.date}
                       type="assignment"
@@ -216,42 +112,40 @@ function SubjectBlock({ remove, id, name }) {
                     />
                   ))
                 ) : (
-                  <div className="d-flex align-items-center justify-content-start">
-                    <p className="text-custom-color-grey-text-emphasis">
-                      No assignments added
-                    </p>
-                  </div>
+                  <p className="text-custom-color-grey-text-emphasis">
+                    No assignments added
+                  </p>
                 )}
               </Col>
               <Col>
-                <div className="d-flex align-items-center justify-content-center image-container">
+                <div className="d-flex align-items-center justify-content-center">
                   <img
-                    className="float-end pt-2 default-image "
+                    className="float-end pt-2 default-image"
                     src={UnfilledPlus}
                     style={{ minWidth: "25px", minHeight: "25px" }}
-                    alt="Logo"
+                    alt="Add Assignment"
                     onClick={handleAssignmentShow}
-                  ></img>
+                  />
                   <img
                     className="float-end pt-2 hover-image"
                     src={FilledPlus}
                     style={{ minWidth: "25px", minHeight: "25px" }}
                     onClick={handleAssignmentShow}
-                    alt="Logo"
-                  ></img>
+                    alt="Add Assignment"
+                  />
                 </div>
               </Col>
             </Row>
+
             <Row>
               <Col xs={11}>
                 <p className="fw-bolder fs-5">Tasks</p>
-                <hr style={{ borderWidth: "2px" }}></hr>
-                {task.length > 0 ? (
-                  task.map((task) => (
+                <hr style={{ borderWidth: "2px" }} />
+                {tasks.length > 0 ? (
+                  tasks.map((task) => (
                     <WorkItem
-                      item={id}
-                      assignmentId={task.key}
                       key={task.key}
+                      assignmentId={task.key}
                       title={task.title}
                       date={task.date}
                       type="task"
@@ -259,35 +153,35 @@ function SubjectBlock({ remove, id, name }) {
                     />
                   ))
                 ) : (
-                  <div className="d-flex align-items-center justify-content-start">
-                    <p className="text-custom-color-grey-text-emphasis">
-                      No tasks added
-                    </p>
-                  </div>
+                  <p className="text-custom-color-grey-text-emphasis">
+                    No tasks added
+                  </p>
                 )}
               </Col>
               <Col>
-                <div className="d-flex align-items-center justify-content-center image-container mb-3">
+                <div className="d-flex align-items-center justify-content-center mb-3">
                   <img
-                    className="float-end pt-2 default-image "
+                    className="float-end pt-2 default-image"
                     src={UnfilledPlus}
                     style={{ minWidth: "25px", minHeight: "25px" }}
-                    alt="Logo"
+                    alt="Add Task"
                     onClick={handleTaskShow}
-                  ></img>
+                  />
                   <img
                     className="float-end pt-2 hover-image"
                     src={FilledPlus}
                     style={{ minWidth: "25px", minHeight: "25px" }}
                     onClick={handleTaskShow}
-                    alt="Logo"
-                  ></img>
+                    alt="Add Task"
+                  />
                 </div>
               </Col>
             </Row>
+
+            {/* Remove Subject Button */}
             <div className="d-flex align-items-center pe-5">
               <Button
-                className="py-1 px-4 mt-2 center-me rounded-5 btn-sm "
+                className="py-1 px-4 mt-2 center-me rounded-5 btn-sm"
                 variant="outline-secondary"
                 onClick={() => remove(id)}
               >
@@ -296,6 +190,8 @@ function SubjectBlock({ remove, id, name }) {
             </div>
           </div>
         </Container>
+
+        {/* Modals */}
         <ModalElement
           title="Add an Assignment"
           element1="Assignment"
@@ -304,17 +200,17 @@ function SubjectBlock({ remove, id, name }) {
           closeFunction={handleAssignmentClose}
           saveChanges={() => addLabel(id, currentObject, "assignment")}
           handleChange={handleInputChange}
-          emptyElement={showMesage}
-        ></ModalElement>
+          emptyElement={showMessage}
+        />
         <ModalElement
           show={taskShow}
           closeFunction={handleTaskClose}
           saveChanges={() => addLabel(id, currentObject, "task")}
-          handleChange={handleInputChangeTask}
+          handleChange={handleInputChange}
           title="Add a Task"
           element1="Task"
           element3="Date"
-          emptyElement={showMesage}
+          emptyElement={showMessage}
         />
       </assignmentModelContext.Provider>
     </>

@@ -9,7 +9,7 @@ chrome.action.onClicked.addListener((tab) => {
  */
 const createAlarm = (date, time, name) => {
   const dateTime = new Date(`${date}T${time}:00`).getTime();
-console.log(dateTime)
+  console.log(dateTime);
   chrome.alarms.create(
     name.split(" ").join("_"),
     {

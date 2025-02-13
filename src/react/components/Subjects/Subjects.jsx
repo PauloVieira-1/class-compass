@@ -7,18 +7,14 @@ import { useEffect, useState, useRef } from "react";
 import SubjectBlock from "./SubjectBlock.jsx";
 import Empty from "../Other/Empty.jsx";
 
-const INITIAL_VALUES = Object.freeze({
-  title: "",
-});
-
-const idGenerator = () => Math.random() + 1;
+const INITIAL_VALUES = { title: "" };
+const idGenerator = () => Date.now();
 
 function Subjects() {
   const [show, setShow] = useState(false);
   const [subjectData, setSubjectData] = useState(INITIAL_VALUES);
   const [list, setList] = useState([]);
   const [showMesage, setShowMessage] = useState(true);
-  const [subjectDisplay, setSubjectDisplay] = useState(false);
 
   const initialized = useRef(false);
 
@@ -28,47 +24,30 @@ function Subjects() {
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
-
-      const storedSubjects = localStorage.getItem("subjects");
-
-      if (storedSubjects) {
-        setList(JSON.parse(storedSubjects));
+      try {
+        const storedSubjects =
+          JSON.parse(localStorage.getItem("subjects")) || [];
+        setList(storedSubjects);
+      } catch (error) {
+        console.error("Error parsing subjects from localStorage:", error);
+        setList([]);
       }
     }
   }, []);
 
-  useEffect(() => {
-    if (list !== null && list.length > 0) {
-      setSubjectDisplay(true);
-    } else {
-      setSubjectDisplay(false);
-    }
-
-  }, [list]);
-
-  /**
-   *
-   * @param {Object} e
-   * @param {String} e.target.name
-   * @param {String} e.target.value
-   */
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setSubjectData((preAppData) => {
-      preAppData = { ...preAppData };
-      preAppData[name] = value;
-
-      return preAppData;
-    });
+    setSubjectData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
     setShowMessage(false);
   };
 
   const handleAddtoDatabase = () => {
-    let current_id = idGenerator();
-
-    if (subjectData.title !== "") {
-      const newList = [...list, { key: current_id, ...subjectData }];
+    if (subjectData.title.trim() !== "") {
+      const newSubject = { key: idGenerator(), ...subjectData };
+      const newList = [...list, newSubject];
 
       setList(newList);
       localStorage.setItem("subjects", JSON.stringify(newList));
@@ -79,25 +58,17 @@ function Subjects() {
     }
   };
 
-  /**
-   * @param {Object} e
-   * @param {String} e.target.name
-   * @param {String} e.target.value
-   */
-
   const removeSubject = (itemID) => {
-    const updatedList = [...list.filter((item) => item.key !== itemID)];
-
+    const updatedList = list.filter((item) => item.key !== itemID);
     setList(updatedList);
-
     localStorage.setItem("subjects", JSON.stringify(updatedList));
   };
 
   return (
-    <subjectModalContext.Provider value={{ show: false }}>
+    <subjectModalContext.Provider value={{ show, setShow }}>
       <Container className="pt-1 px-0 m-0">
         <Row>
-          {subjectDisplay ? (
+          {list.length > 0 ? (
             <Col style={{ overflowY: "scroll", maxHeight: "580px" }}>
               {list.map((item) => (
                 <SubjectBlock
@@ -121,15 +92,15 @@ function Subjects() {
                 src={UnfilledPlus}
                 style={{ minWidth: "30px", minHeight: "30px" }}
                 onClick={handleShow}
-                alt="Logo"
-              ></img>
+                alt="Add Subject"
+              />
               <img
                 className="float-end pt-2 hover-image me-2"
                 src={FilledPlus}
                 style={{ minWidth: "30px", minHeight: "30px" }}
                 onClick={handleShow}
-                alt="Logo"
-              ></img>
+                alt="Add Subject"
+              />
             </div>
           </Col>
         </Row>

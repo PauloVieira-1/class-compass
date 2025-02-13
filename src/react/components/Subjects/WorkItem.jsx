@@ -23,9 +23,7 @@ function WorkItem(props) {
               src={fullTrash}
               style={{ minWidth: "20px", minHeight: "20px" }}
               alt="Logo"
-              onClick={() =>
-                props.remove(props.item, props.assignmentId, props.type)
-              }
+              onClick={() => props.remove(props.assignmentId, props.type)}
             ></img>
           </div>
         </Col>

@@ -67,7 +67,10 @@ function ReminderHolder() {
       reminderData.content !== "" ||
       reminderData.date !== ""
     ) {
-      const newReminders = [...reminders??[], { key: current_id, ...reminderData }]; /// weird  bracket thing why [] when I have reminders default 
+      const newReminders = [
+        ...(reminders ?? []),
+        { key: current_id, ...reminderData },
+      ]; /// weird  bracket thing why [] when I have reminders default
 
       setReminder(newReminders);
       localStorage.setItem("reminders", JSON.stringify(newReminders));
