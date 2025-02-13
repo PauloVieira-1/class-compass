@@ -69,7 +69,7 @@ function Subjects() {
       <Container className="pt-1 px-0 m-0">
         <Row>
           {list.length > 0 ? (
-            <Col style={{ overflowY: "scroll", maxHeight: "580px" }}>
+            <Col style={{ overflowY: "scroll", maxHeight: "570px" }}>
               {list.map((item) => (
                 <SubjectBlock
                   key={item.key}

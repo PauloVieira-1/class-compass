@@ -118,7 +118,7 @@ function SubjectBlock({ remove, id, name }) {
                 )}
               </Col>
               <Col>
-                <div className="d-flex align-items-center justify-content-center">
+                <div className="d-flex align-items-center justify-content-center image-container">
                   <img
                     className="float-end pt-2 default-image"
                     src={UnfilledPlus}
@@ -159,7 +159,7 @@ function SubjectBlock({ remove, id, name }) {
                 )}
               </Col>
               <Col>
-                <div className="d-flex align-items-center justify-content-center mb-3">
+                <div className="d-flex align-items-center justify-content-center mb-3 image-container">
                   <img
                     className="float-end pt-2 default-image"
                     src={UnfilledPlus}

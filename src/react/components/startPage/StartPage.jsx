@@ -102,10 +102,10 @@ function StartPage() {
               alt="Weather Icon"
             />
           </Col>
-          <Col xs={3} className="text-white ms-4">
-            <h2 className="fw-bold fs-4">{city ? `${city}` : "Loading..."}</h2>
-            <p>{condition ? `${condition}` : "Loading..."}</p>
-            <p>{temp ? `${temp}°C` : "Loading..."}</p>
+          <Col xs={3} className=" d-flex flex-column justify-content-center pt-3 text-white ms-4">
+            <h2 className="fw-bold fs-4 mb-2">{city ? `${city}` : "Loading..."}</h2>
+            <p className="mb-1">  {condition ? `${condition}` : "Loading..."}</p>
+            <p className="mb-1">  {temp ? `${temp}°C` : "Loading..."}</p>
           </Col>
           {/* <Col xs={1}>
             <h1>""</h1>

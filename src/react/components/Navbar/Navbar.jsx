@@ -1,7 +1,7 @@
 import "./Navbar.css";
 import { Container, Row } from "react-bootstrap";
 import QuickNotes from "../QuickNotes/QuickNotes.jsx";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/Logo2.png";
 function Navbar({
   subjectFunction,
   applicationFunction,
