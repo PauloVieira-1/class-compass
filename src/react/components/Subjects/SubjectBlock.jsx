@@ -20,8 +20,8 @@ function SubjectBlock({ remove, id, name }) {
   const [showMessage, setShowMessage] = useState(true);
 
   useEffect(() => {
-    const storedAssignments = localStorage.getItem("assignments");
-    const storedTasks = localStorage.getItem("tasks");
+    const storedAssignments = localStorage.getItem(`assignments_${id}`);
+    const storedTasks = localStorage.getItem(`tasks_${id}`);
 
     setAssignments(storedAssignments ? JSON.parse(storedAssignments) : []);
     setTasks(storedTasks ? JSON.parse(storedTasks) : []);
@@ -50,14 +50,14 @@ function SubjectBlock({ remove, id, name }) {
     if (label === "assignment") {
       setAssignments((prev) => {
         const updatedAssignments = [...prev, newItem];
-        localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
+        localStorage.setItem(`assignments_${id}`, JSON.stringify(updatedAssignments));
         return updatedAssignments;
       });
       handleAssignmentClose();
     } else if (label === "task") {
       setTasks((prev) => {
         const updatedTasks = [...prev, newItem];
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        localStorage.setItem(`tasks_${id}`, JSON.stringify(updatedTasks));
         return updatedTasks;
       });
       handleTaskClose();
@@ -72,13 +72,13 @@ function SubjectBlock({ remove, id, name }) {
         const updatedAssignments = prev.filter(
           (assignment) => assignment.key !== objectID,
         );
-        localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
+        localStorage.setItem(`assignments_${id}`, JSON.stringify(updatedAssignments));
         return updatedAssignments;
       });
     } else if (label === "task") {
       setTasks((prev) => {
         const updatedTasks = prev.filter((task) => task.key !== objectID);
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        localStorage.setItem(`tasks_${id}`, JSON.stringify(updatedTasks));
         return updatedTasks;
       });
     }
